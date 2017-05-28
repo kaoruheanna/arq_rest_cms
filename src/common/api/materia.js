@@ -10,6 +10,16 @@ angular.module( 'api.materia', [ 'app.api'] )
 		var url = '/materia/'+materiaId+'/curso';
 		api.getRequest(url,successCallback,errorCallback);
 	};
+
+	this.inscriptosCurso = function(materiaId, cursoId, successCallback, errorCallback){
+		var url = '/materia/'+materiaId+'/curso/'+cursoId;
+		api.getRequest(url,successCallback,errorCallback);
+	};
+
+	this.desinscribir = function(materiaId, cursoId, alumnoId, successCallback, errorCallback){
+		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/alumno/'+alumnoId;
+		api.deleteRequest(url,successCallback,errorCallback);	
+	};
 	/*
 
 	this.getInfoLocal = function(localId,successCallback,errorCallback){

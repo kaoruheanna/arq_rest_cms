@@ -1,11 +1,17 @@
-<h1>Cursos</h1>
+<h1>Alumnos</h1>
 
+<div class="pull-right create-button" >
+    Inscribir
+    <a ng-click="add()" class="btn btn-info">
+        <i class="fa fa-plus"></i>
+    </a>
+</div>
 <table class="table table-bordered table-striped table-responsive">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Docente</th>
-            <th>Horario</th>
+            <th>Padron</th>
+            <th>Nombre</th>
             <th></th>
         </tr>
     </thead>
@@ -15,14 +21,14 @@
                 <span>{{ model.id }}</span>
             </td>
             <td>
-                <span>{{ model.docente }}</span>
+                <span>{{ model.padron }}</span>
             </td>
             <td>
-                <span>{{ model.horario }}</span>
+                <span>{{ model.apellido }}, {{ model.nombres }}</span>
             </td>
             <td>
-                <a class="btn btn-info" ng-click="edit(model)">
-                    <i class="fa fa-pencil"></i>
+                <a class="btn btn-danger" ng-click="destroy(model)">
+                    <i class="fa fa-trash-o"></i>
                 </a>
             </td>
         </tr>
