@@ -1,0 +1,15 @@
+<h1>Inscribir</h1>
+<form class="form-horizontal" ng-submit="submit()">
+    <div class="form-group">
+        <select class="form-control" name="alumno" id="alumno" ng-model="alumnoId">
+            <option ng-repeat="option in candidatos" value="{{option.id}}">
+                {{option.apellido}}, {{option.nombres}} - Padron: {{option.padron}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-success">Inscribir</button>
+        </div>
+    </div>
+</form>

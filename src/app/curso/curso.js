@@ -20,7 +20,7 @@ angular.module( 'ngBoilerplate.curso', [
         params: {
             materiaId: null
         },
-        data:{ pageTitle: 'Curso' }
+        data:{ pageTitle: 'Materia' }
     });
 
     $stateProvider.state( 'curso', {
@@ -36,6 +36,21 @@ angular.module( 'ngBoilerplate.curso', [
             cursoId: null
         },
         data:{ pageTitle: 'Curso' }
+    });
+
+    $stateProvider.state( 'inscribir', {
+        url: '/inscribir',
+        views: {
+            "main": {
+                controller: 'InscribirCtrl',
+                templateUrl: 'curso/inscribir.tpl.html'
+            }
+        },
+        params: {
+            materiaId: null,
+            cursoId: null
+        },
+        data:{ pageTitle: 'Inscribir' }
     });
 })
 
@@ -84,6 +99,44 @@ angular.module( 'ngBoilerplate.curso', [
                 console.log("fallo!!!");
             }
         );
+    };
+
+    $scope.add = function(){
+        $state.go('inscribir', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId });
+    };
+})
+
+.controller( 'InscribirCtrl', function CursoController( $scope, materiaApi, $state ) {
+    $scope.candidatos = [];
+    $scope.alumnoId = null;
+
+    var fetchData = function(){
+        materiaApi.candidatosCurso(
+            $state.params.materiaId,
+            $state.params.cursoId,
+            function(data){
+                console.log("data:",data);
+                $scope.candidatos = data;
+            }, function(err){
+                console.log("fallo!!!");
+            }
+        );
+    };
+
+    fetchData();
+
+    $scope.submit = function(){
+        materiaApi.inscribir(
+            $state.params.materiaId,
+            $state.params.cursoId,
+            $scope.alumnoId,
+            function(data){
+                $state.go('curso', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId });
+            }, function(err){
+                console.log("fallo!");
+            }
+        );
+        console.log("alumno: ",$scope.alumnoId);
     };
 })
 
