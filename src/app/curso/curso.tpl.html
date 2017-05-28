@@ -1,0 +1,30 @@
+<h1>Cursos</h1>
+
+<table class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Docente</th>
+            <th>Horario</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="model in models">
+            <td>
+                <span>{{ model.id }}</span>
+            </td>
+            <td>
+                <span>{{ model.docente }}</span>
+            </td>
+            <td>
+                <span>{{ model.horario }}</span>
+            </td>
+            <td>
+                <a class="btn btn-info" ng-click="edit(model)">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -5,6 +5,11 @@ angular.module( 'api.materia', [ 'app.api'] )
 	this.list = function(successCallback,errorCallback){
 		api.getRequest('/materia',successCallback,errorCallback);
 	};
+
+	this.cursosForMateria = function(materiaId, successCallback, errorCallback){
+		var url = '/materia/'+materiaId+'/curso';
+		api.getRequest(url,successCallback,errorCallback);
+	};
 	/*
 
 	this.getInfoLocal = function(localId,successCallback,errorCallback){

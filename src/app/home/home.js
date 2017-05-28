@@ -38,7 +38,7 @@ angular.module( 'ngBoilerplate.home', [
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'HomeCtrl', function HomeController( $scope, materiaApi ) {
+.controller( 'HomeCtrl', function HomeController( $scope, materiaApi, $state) {
     
     $scope.models = [];
     materiaApi.list(function(data){
@@ -47,35 +47,10 @@ angular.module( 'ngBoilerplate.home', [
         console.log("fallo!!!");
     });
 
-    /*
-    $scope.getAlltickersForActivo = function(params,callback){
-          session.getAuthorizationHeader(function(err,token){
-           if(err){
-            callback(err);
-            return;
-           }
-            $http({
-              method: 'GET',
-              url: config.apiUrl+'/activo/ticker',
-              params: params,
-              headers: {
-             'Authorization': token
-            }
-          })
-          .then(
-            function(promise){
-              var res = promise.data;
-              if(res.error){
-                callback(res.error);
-              } else {
-                callback(null, res.data, res.page, res.lastPage);
-              }
-          },
-          callback
-          );
-        });
-       };
-    */
+    $scope.edit = function(model){
+        console.log("id:",model.id);
+        $state.go('materia', {materiaId: model.id});
+    };
 })
 
 ;
