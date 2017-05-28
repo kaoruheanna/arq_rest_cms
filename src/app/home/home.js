@@ -13,8 +13,8 @@
  * specified, as shown below.
  */
 angular.module( 'ngBoilerplate.home', [
-  'ui.router',
-  'plusOne'
+    'ui.router',
+    'api.materia'
 ])
 
 /**
@@ -23,22 +23,59 @@ angular.module( 'ngBoilerplate.home', [
  * this way makes each module more "self-contained".
  */
 .config(function config( $stateProvider ) {
-  $stateProvider.state( 'home', {
-    url: '/home',
-    views: {
-      "main": {
-        controller: 'HomeCtrl',
-        templateUrl: 'home/home.tpl.html'
-      }
-    },
-    data:{ pageTitle: 'Home' }
-  });
+    $stateProvider.state( 'home', {
+        url: '/home',
+        views: {
+            "main": {
+                controller: 'HomeCtrl',
+                templateUrl: 'home/home.tpl.html'
+            }
+        },
+        data:{ pageTitle: 'Home' }
+    });
 })
 
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'HomeCtrl', function HomeController( $scope ) {
+.controller( 'HomeCtrl', function HomeController( $scope, materiaApi ) {
+    
+    $scope.models = [];
+    materiaApi.list(function(data){
+        $scope.models = data;
+    }, function(err){
+        console.log("fallo!!!");
+    });
+
+    /*
+    $scope.getAlltickersForActivo = function(params,callback){
+          session.getAuthorizationHeader(function(err,token){
+           if(err){
+            callback(err);
+            return;
+           }
+            $http({
+              method: 'GET',
+              url: config.apiUrl+'/activo/ticker',
+              params: params,
+              headers: {
+             'Authorization': token
+            }
+          })
+          .then(
+            function(promise){
+              var res = promise.data;
+              if(res.error){
+                callback(res.error);
+              } else {
+                callback(null, res.data, res.page, res.lastPage);
+              }
+          },
+          callback
+          );
+        });
+       };
+    */
 })
 
 ;
