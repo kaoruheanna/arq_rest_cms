@@ -16,18 +16,18 @@ angular.module( 'api.materia', [ 'app.api'] )
 		api.getRequest(url,successCallback,errorCallback);
 	};
 
-	this.desinscribir = function(materiaId, cursoId, alumnoId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/alumno/'+alumnoId;
+	this.desinscribir = function(materiaId, cursoId, inscripcionId, successCallback, errorCallback){
+		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/inscripcion/'+inscripcionId;
 		api.deleteRequest(url,successCallback,errorCallback);	
 	};
 
 	this.candidatosCurso = function(materiaId, cursoId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/alumno';
+		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/inscripcion';
 		api.getRequest(url,successCallback,errorCallback);
 	};
 	
 	this.inscribir = function(materiaId, cursoId, alumnoId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/alumno';
+		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/inscripcion';
 		var data = {
 			alumnoId: alumnoId,
 			cursoId: cursoId

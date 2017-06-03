@@ -9,7 +9,7 @@
 <table class="table table-bordered table-striped table-responsive">
     <thead>
         <tr>
-            <th>ID</th>
+            <th>ID inscripcion</th>
             <th>Padron</th>
             <th>Nombre</th>
             <th></th>
@@ -21,10 +21,10 @@
                 <span>{{ model.id }}</span>
             </td>
             <td>
-                <span>{{ model.padron }}</span>
+                <span>{{ model.alumno.padron }}</span>
             </td>
             <td>
-                <span>{{ model.apellido }}, {{ model.nombres }}</span>
+                <span>{{ model.alumno.apellido }}, {{ model.alumno.nombres }}</span>
             </td>
             <td>
                 <a class="btn btn-danger" ng-click="destroy(model)">
