@@ -139,7 +139,7 @@ angular.module( 'ngBoilerplate.curso', [
             addUrl,
             $scope.alumnoId,
             function(data){
-                $state.go('curso', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId });
+                $state.go( $state.previous.name, $state.previous.params );
             }, function(err){
                 console.log("fallo!");
             }
