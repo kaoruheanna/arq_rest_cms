@@ -6,33 +6,27 @@ angular.module( 'api.materia', [ 'app.api'] )
 		api.getRequest('/materia',successCallback,errorCallback);
 	};
 
-	this.cursosForMateria = function(materiaId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso';
-		api.getRequest(url,successCallback,errorCallback);
+	this.cursosForMateria = function(link, successCallback, errorCallback){
+		api.getRequest(link,successCallback,errorCallback);
 	};
 
-	this.inscriptosCurso = function(materiaId, cursoId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId;
-		api.getRequest(url,successCallback,errorCallback);
+	this.inscriptosCurso = function(link, successCallback, errorCallback){
+		api.getRequest(link,successCallback,errorCallback);
 	};
 
-	this.desinscribir = function(materiaId, cursoId, inscripcionId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/inscripcion/'+inscripcionId;
-		api.deleteRequest(url,successCallback,errorCallback);	
+	this.desinscribir = function(remove, successCallback, errorCallback){
+		api.deleteRequest(remove,successCallback,errorCallback);	
 	};
 
-	this.candidatosCurso = function(materiaId, cursoId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/inscripcion';
-		api.getRequest(url,successCallback,errorCallback);
+	this.candidatosCurso = function(link, successCallback, errorCallback){
+		api.getRequest(link,successCallback,errorCallback);
 	};
 	
-	this.inscribir = function(materiaId, cursoId, alumnoId, successCallback, errorCallback){
-		var url = '/materia/'+materiaId+'/curso/'+cursoId+'/inscripcion';
+	this.inscribir = function(add, alumnoId, successCallback, errorCallback){
 		var data = {
-			alumnoId: alumnoId,
-			cursoId: cursoId
+			alumnoId: alumnoId
 		};
-		api.postRequest(url, data, successCallback,errorCallback);
+		api.postRequest(add, data, successCallback,errorCallback);
 	};
 
 });

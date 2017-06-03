@@ -18,7 +18,8 @@ angular.module( 'ngBoilerplate.curso', [
             }
         },
         params: {
-            materiaId: null
+            //materiaId: null,
+            link: null
         },
         data:{ pageTitle: 'Materia' }
     });
@@ -32,8 +33,9 @@ angular.module( 'ngBoilerplate.curso', [
             }
         },
         params: {
-            materiaId: null,
-            cursoId: null
+            //materiaId: null,
+            //cursoId: null
+            link: null
         },
         data:{ pageTitle: 'Curso' }
     });
@@ -47,8 +49,9 @@ angular.module( 'ngBoilerplate.curso', [
             }
         },
         params: {
-            materiaId: null,
-            cursoId: null
+            //materiaId: null,
+            //cursoId: null,
+            link: null
         },
         data:{ pageTitle: 'Inscribir' }
     });
@@ -60,7 +63,7 @@ angular.module( 'ngBoilerplate.curso', [
 .controller( 'MateriaCtrl', function MateriaController( $scope, materiaApi, $state ) {
     $scope.models = [];
     materiaApi.cursosForMateria(
-        $state.params.materiaId,
+        $state.params.link,
         function(data){
             $scope.models = data;
         }, function(err){
@@ -69,20 +72,23 @@ angular.module( 'ngBoilerplate.curso', [
     );
 
     $scope.edit = function(model){
-        $state.go('curso', { materiaId: $state.params.materiaId, cursoId: model.id });
+        //$state.go('curso', { materiaId: $state.params.materiaId, cursoId: model.id });
+        $state.go('curso', { link: model.link });
     };
 })
 
 .controller( 'CursoCtrl', function CursoController( $scope, materiaApi, $state ) {
-    $scope.models = [];
+    $scope.inscriptos = [];
+    $scope.curso = null;
+    var link = null;
 
     var fetchData = function(){
         materiaApi.inscriptosCurso(
-            $state.params.materiaId,
-            $state.params.cursoId,
+            $state.params.link,
             function(data){
-                console.log("data:",data);
-                $scope.models = data;
+                $scope.curso = data.curso;
+                $scope.inscriptos = data.inscriptos;
+                link = data.link;
             }, function(err){
                 console.log("fallo!!!");
             }
@@ -92,7 +98,7 @@ angular.module( 'ngBoilerplate.curso', [
     fetchData();
 
     $scope.destroy = function(model){
-        materiaApi.desinscribir($state.params.materiaId,$state.params.cursoId, model.id,
+        materiaApi.desinscribir(model.remove,
             function(data){
                 fetchData();
             }, function(err){
@@ -102,21 +108,24 @@ angular.module( 'ngBoilerplate.curso', [
     };
 
     $scope.add = function(){
-        $state.go('inscribir', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId });
+        //$state.go('inscribir', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId, link: link });
+        $state.go('inscribir', { link: link });
     };
 })
 
 .controller( 'InscribirCtrl', function CursoController( $scope, materiaApi, $state ) {
     $scope.candidatos = [];
     $scope.alumnoId = null;
+    var addUrl = null;
 
     var fetchData = function(){
         materiaApi.candidatosCurso(
-            $state.params.materiaId,
-            $state.params.cursoId,
+            //$state.params.materiaId,
+            //$state.params.cursoId,
+            $state.params.link,
             function(data){
-                console.log("data:",data);
-                $scope.candidatos = data;
+                $scope.candidatos = data.candidatos;
+                addUrl = data.add;
             }, function(err){
                 console.log("fallo!!!");
             }
@@ -127,8 +136,7 @@ angular.module( 'ngBoilerplate.curso', [
 
     $scope.submit = function(){
         materiaApi.inscribir(
-            $state.params.materiaId,
-            $state.params.cursoId,
+            addUrl,
             $scope.alumnoId,
             function(data){
                 $state.go('curso', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId });

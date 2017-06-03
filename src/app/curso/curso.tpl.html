@@ -6,6 +6,8 @@
         <i class="fa fa-plus"></i>
     </a>
 </div>
+<div> Docente: {{ curso.docente }}</div>
+<div> Horario: {{ curso.horario }}</div>
 <table class="table table-bordered table-striped table-responsive">
     <thead>
         <tr>
@@ -16,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="model in models">
+        <tr ng-repeat="model in inscriptos">
             <td>
                 <span>{{ model.id }}</span>
             </td>

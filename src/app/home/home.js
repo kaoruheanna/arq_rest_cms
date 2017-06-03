@@ -48,8 +48,11 @@ angular.module( 'ngBoilerplate.home', [
     });
 
     $scope.edit = function(model){
-        console.log("id:",model.id);
-        $state.go('materia', {materiaId: model.id});
+        $state.go(
+            'materia', 
+            //{ materiaId: model.id, link: model.link }
+            { link: model.link }
+        );
     };
 })
 
