@@ -55,8 +55,25 @@ angular.module( 'app.soapApi', [] )
 			makeRequest('materiasList','',successCallback,errorCallback);
 		};
 
+		var cursosForMateria = function(materiaId, successCallback, errorCallback){
+			var args = {
+				materiaId: materiaId
+			};
+			makeRequest('cursosList',args,successCallback,errorCallback);
+		};
+
+		var inscriptosCurso = function(cursoId, successCallback, errorCallback){
+			var args = {
+				cursoId: cursoId
+			};
+			makeRequest('getCurso',args,successCallback,errorCallback);
+		};
+		
+
 		return {
-			materiasList: materiasList
+			materiasList: materiasList,
+			cursosForMateria: cursosForMateria,
+			inscriptosCurso: inscriptosCurso
 		};
 
 	}

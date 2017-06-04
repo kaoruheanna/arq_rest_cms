@@ -51,8 +51,7 @@ angular.module( 'ngBoilerplate.home', [
     $scope.edit = function(model){
         $state.go(
             'materia', 
-            //{ materiaId: model.id, link: model.link }
-            { link: model.link }
+            { materiaId: model.id }
         );
     };
 })
