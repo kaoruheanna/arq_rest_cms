@@ -42,15 +42,12 @@ angular.module( 'ngBoilerplate.home', [
     
     $scope.models = [];
     
-    /*
-    materiaApi.list(function(data){
+    soapApi.materiasList(function(data){
         $scope.models = data;
     }, function(err){
         console.log("fallo!!!");
     });
-    */
-    soapApi.makeRequest('');
-
+    
     $scope.edit = function(model){
         $state.go(
             'materia', 

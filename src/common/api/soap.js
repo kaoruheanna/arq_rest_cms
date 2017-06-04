@@ -5,23 +5,25 @@ angular.module( 'app.soapApi', [] )
 	function($http){
 		
 		var API_URL = 'http://localhost:9000';
+		var x2js = new X2JS();
 
-		var makeRequest = function(url, successCallback, errorCallback){
-			var x2js = new X2JS();
-			var kao = {
-				body: {
-					nombre: 'Kaoruuuu',
-					apellido: 'Heannaaaa'	
-				}
+		var parseBodyToSend = function(body){
+			var envelope = {
+				body: body
 			};
-			var xmlData = x2js.json2xml_str( kao );
-			//console.log("json:",jsonObj);
+			var jsonObj = {
+				envelope: envelope
+			};
+			return x2js.json2xml_str(jsonObj);
+		};
 
-
-			//var data = '<body><nombre>Kaoru martin</nombre><apellido>heanna</apellido></body>';
+		var makeRequest = function(method, args, successCallback, errorCallback){
+			var body = {};
+			body[method]= args;
+			var xmlData = parseBodyToSend(body);
 			$http({
 				method: 'POST',
-				url: API_URL+url,
+				url: API_URL,
 				data: xmlData,
 				headers: {
 					'Content-Type': 'application/xml'
@@ -29,19 +31,14 @@ angular.module( 'app.soapApi', [] )
 			})
 			.then(
 				function(promise){
-					console.log("promise:",promise);
-					var res = x2js.xml_str2json(promise.data);
-					console.log("mande nombre:",res.root.name);
-					console.log("mande Surname:",res.root.Surname);
+					var data = x2js.xml_str2json(promise.data);
+					var res = data.root;
 					console.log("res:",res);
-					/*
-					var res = promise.data;
 					if(res.error || !res.success){
 						errorCallback(res.error);
 					} else {
 						successCallback(res.data);
 					}
-					*/
 				},
 				function(response){
 					console.log("data:",response.data);
@@ -54,8 +51,12 @@ angular.module( 'app.soapApi', [] )
 			);
 		};
 
+		var materiasList = function(successCallback,errorCallback){
+			makeRequest('materiasList','',successCallback,errorCallback);
+		};
+
 		return {
-			makeRequest: makeRequest
+			materiasList: materiasList
 		};
 
 	}
