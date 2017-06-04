@@ -14,7 +14,7 @@
  */
 angular.module( 'ngBoilerplate.home', [
     'ui.router',
-    'api.materia'
+    'app.soapApi'
 ])
 
 /**
@@ -38,14 +38,18 @@ angular.module( 'ngBoilerplate.home', [
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'HomeCtrl', function HomeController( $scope, materiaApi, $state) {
+.controller( 'HomeCtrl', function HomeController( $scope, soapApi, $state) {
     
     $scope.models = [];
+    
+    /*
     materiaApi.list(function(data){
         $scope.models = data;
     }, function(err){
         console.log("fallo!!!");
     });
+    */
+    soapApi.makeRequest('');
 
     $scope.edit = function(model){
         $state.go(
