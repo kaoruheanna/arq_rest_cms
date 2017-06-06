@@ -32,7 +32,8 @@ angular.module( 'ngBoilerplate.curso', [
             }
         },
         params: {
-            cursoId: null
+            cursoId: null,
+            materiaId: null
         },
         data:{ pageTitle: 'Curso' }
     });
@@ -46,9 +47,8 @@ angular.module( 'ngBoilerplate.curso', [
             }
         },
         params: {
-            //materiaId: null,
-            //cursoId: null,
-            link: null
+            materiaId: null,
+            cursoId: null
         },
         data:{ pageTitle: 'Inscribir' }
     });
@@ -69,7 +69,7 @@ angular.module( 'ngBoilerplate.curso', [
     );
 
     $scope.edit = function(model){
-        $state.go('curso', { cursoId: model.id });
+        $state.go('curso', { cursoId: model.id, materiaId: model.materiaId });
     };
 })
 
@@ -82,7 +82,9 @@ angular.module( 'ngBoilerplate.curso', [
             $state.params.cursoId,
             function(data){
                 $scope.curso = data.curso;
-                $scope.inscriptos = data.inscriptos;
+                if (data.inscriptos){
+                    $scope.inscriptos = Array.isArray(data.inscriptos) ? data.inscriptos : [data.inscriptos];    
+                }
             }, function(err){
                 console.log("fallo!!!");
             }
@@ -92,7 +94,7 @@ angular.module( 'ngBoilerplate.curso', [
     fetchData();
 
     $scope.destroy = function(model){
-        soapApi.desinscribir(model.remove,
+        soapApi.desinscribir(model.id,
             function(data){
                 fetchData();
             }, function(err){
@@ -102,24 +104,21 @@ angular.module( 'ngBoilerplate.curso', [
     };
 
     $scope.add = function(){
-        //$state.go('inscribir', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId, link: link });
-        $state.go('inscribir', { link: link });
+        $state.go('inscribir', { materiaId: $state.params.materiaId, cursoId: $state.params.cursoId });
     };
 })
 
 .controller( 'InscribirCtrl', function CursoController( $scope, soapApi, $state ) {
     $scope.candidatos = [];
     $scope.alumnoId = null;
-    var addUrl = null;
-
+    
     var fetchData = function(){
         soapApi.candidatosCurso(
-            //$state.params.materiaId,
-            //$state.params.cursoId,
-            $state.params.link,
+            $state.params.materiaId,
             function(data){
-                $scope.candidatos = data.candidatos;
-                addUrl = data.add;
+                if (data.candidatos){
+                    $scope.candidatos = Array.isArray(data.candidatos) ? data.candidatos : [data.candidatos];    
+                }
             }, function(err){
                 console.log("fallo!!!");
             }
@@ -130,7 +129,7 @@ angular.module( 'ngBoilerplate.curso', [
 
     $scope.submit = function(){
         soapApi.inscribir(
-            addUrl,
+            $state.params.cursoId,
             $scope.alumnoId,
             function(data){
                 $state.go( $state.previous.name, $state.previous.params );
@@ -138,7 +137,6 @@ angular.module( 'ngBoilerplate.curso', [
                 console.log("fallo!");
             }
         );
-        console.log("alumno: ",$scope.alumnoId);
     };
 })
 

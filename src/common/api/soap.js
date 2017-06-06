@@ -68,12 +68,37 @@ angular.module( 'app.soapApi', [] )
 			};
 			makeRequest('getCurso',args,successCallback,errorCallback);
 		};
+
+		var candidatosCurso = function(materiaId, successCallback, errorCallback){
+			var args = {
+				materiaId: materiaId
+			};
+			makeRequest('getCandidatos',args,successCallback,errorCallback);
+		};
+		
+		var desinscribir = function(inscripcionId, successCallback, errorCallback){
+			var args = {
+				inscripcionId: inscripcionId
+			};
+			makeRequest('desinscribir',args, successCallback,errorCallback);
+		};
+
+		var inscribir = function(cursoId, alumnoId, successCallback, errorCallback){
+			var args = {
+				cursoId: cursoId,
+				alumnoId: alumnoId
+			};
+			makeRequest('inscribir',args, successCallback,errorCallback);
+		};
 		
 
 		return {
 			materiasList: materiasList,
 			cursosForMateria: cursosForMateria,
-			inscriptosCurso: inscriptosCurso
+			inscriptosCurso: inscriptosCurso,
+			candidatosCurso: candidatosCurso,
+			desinscribir: desinscribir,
+			inscribir: inscribir
 		};
 
 	}
